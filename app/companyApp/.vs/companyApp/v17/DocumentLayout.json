@@ -1,0 +1,88 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\nikiv\\Desktop\\MyProjects\\Rowi practise\\app\\companyApp\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A1641B92-C1C5-4AC1-B4E7-30FACDB69DA5}|companyApp.Server\\companyApp.Server.csproj|c:\\users\\nikiv\\desktop\\myprojects\\rowi practise\\app\\companyapp\\companyapp.server\\controllers\\companycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1641B92-C1C5-4AC1-B4E7-30FACDB69DA5}|companyApp.Server\\companyApp.Server.csproj|solutionrelative:companyapp.server\\controllers\\companycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1641B92-C1C5-4AC1-B4E7-30FACDB69DA5}|companyApp.Server\\companyApp.Server.csproj|c:\\users\\nikiv\\desktop\\myprojects\\rowi practise\\app\\companyapp\\companyapp.server\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1641B92-C1C5-4AC1-B4E7-30FACDB69DA5}|companyApp.Server\\companyApp.Server.csproj|solutionrelative:companyapp.server\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1641B92-C1C5-4AC1-B4E7-30FACDB69DA5}|companyApp.Server\\companyApp.Server.csproj|c:\\users\\nikiv\\desktop\\myprojects\\rowi practise\\app\\companyapp\\companyapp.server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1641B92-C1C5-4AC1-B4E7-30FACDB69DA5}|companyApp.Server\\companyApp.Server.csproj|solutionrelative:companyapp.server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 777,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{a80febb4-e7e0-4147-b476-21aaf2453969}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "WeatherForecastController.cs",
+              "DocumentMoniker": "C:\\Users\\nikiv\\Desktop\\MyProjects\\Rowi practise\\app\\companyApp\\companyApp.Server\\Controllers\\WeatherForecastController.cs",
+              "RelativeDocumentMoniker": "companyApp.Server\\Controllers\\WeatherForecastController.cs",
+              "ToolTip": "C:\\Users\\nikiv\\Desktop\\MyProjects\\Rowi practise\\app\\companyApp\\companyApp.Server\\Controllers\\WeatherForecastController.cs",
+              "RelativeToolTip": "companyApp.Server\\Controllers\\WeatherForecastController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-30T20:17:02.98Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\nikiv\\Desktop\\MyProjects\\Rowi practise\\app\\companyApp\\companyApp.Server\\Program.cs",
+              "RelativeDocumentMoniker": "companyApp.Server\\Program.cs",
+              "ToolTip": "C:\\Users\\nikiv\\Desktop\\MyProjects\\Rowi practise\\app\\companyApp\\companyApp.Server\\Program.cs",
+              "RelativeToolTip": "companyApp.Server\\Program.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-30T17:55:34.548Z"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 777,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CompanyController.cs",
+              "DocumentMoniker": "C:\\Users\\nikiv\\Desktop\\MyProjects\\Rowi practise\\app\\companyApp\\companyApp.Server\\Controllers\\CompanyController.cs",
+              "RelativeDocumentMoniker": "companyApp.Server\\Controllers\\CompanyController.cs",
+              "ToolTip": "C:\\Users\\nikiv\\Desktop\\MyProjects\\Rowi practise\\app\\companyApp\\companyApp.Server\\Controllers\\CompanyController.cs",
+              "RelativeToolTip": "companyApp.Server\\Controllers\\CompanyController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-30T19:53:00.133Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

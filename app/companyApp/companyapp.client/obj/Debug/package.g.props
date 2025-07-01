@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <PropertyGroup>
+    <PackageJsonName Condition="$(PackageJsonName) == ''">companyapp.client</PackageJsonName>
+    <PackageJsonVersion Condition="$(PackageJsonVersion) == ''">0.0.0</PackageJsonVersion>
+    <PackageJsonPrivate Condition="$(PackageJsonPrivate) == ''">true</PackageJsonPrivate>
+    <PackageJsonType Condition="$(PackageJsonType) == ''">module</PackageJsonType>
+    <PackageJsonScriptsDev Condition="$(PackageJsonScriptsDev) == ''">vite</PackageJsonScriptsDev>
+    <PackageJsonScriptsBuild Condition="$(PackageJsonScriptsBuild) == ''">vite build</PackageJsonScriptsBuild>
+    <PackageJsonScriptsPreview Condition="$(PackageJsonScriptsPreview) == ''">vite preview</PackageJsonScriptsPreview>
+    <PackageJsonScriptsLint Condition="$(PackageJsonScriptsLint) == ''">eslint . --fix</PackageJsonScriptsLint>
+    <PackageJsonDependenciesVue Condition="$(PackageJsonDependenciesVue) == ''">^3.5.17</PackageJsonDependenciesVue>
+    <PackageJsonDevdependenciesEslintJs Condition="$(PackageJsonDevdependenciesEslintJs) == ''">^9.29.0</PackageJsonDevdependenciesEslintJs>
+    <PackageJsonDevdependenciesVitejsPluginVue Condition="$(PackageJsonDevdependenciesVitejsPluginVue) == ''">^6.0.0</PackageJsonDevdependenciesVitejsPluginVue>
+    <PackageJsonDevdependenciesEslint Condition="$(PackageJsonDevdependenciesEslint) == ''">^9.29.0</PackageJsonDevdependenciesEslint>
+    <PackageJsonDevdependenciesEslintPluginVue Condition="$(PackageJsonDevdependenciesEslintPluginVue) == ''">~10.2.0</PackageJsonDevdependenciesEslintPluginVue>
+    <PackageJsonDevdependenciesGlobals Condition="$(PackageJsonDevdependenciesGlobals) == ''">^16.2.0</PackageJsonDevdependenciesGlobals>
+    <PackageJsonDevdependenciesVite Condition="$(PackageJsonDevdependenciesVite) == ''">^7.0.0</PackageJsonDevdependenciesVite>
+    <PackageJsonDevdependenciesVitePluginVueDevtools Condition="$(PackageJsonDevdependenciesVitePluginVueDevtools) == ''">^7.7.7</PackageJsonDevdependenciesVitePluginVueDevtools>
+  </PropertyGroup>
+</Project>
