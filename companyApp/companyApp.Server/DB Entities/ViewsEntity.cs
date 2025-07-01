@@ -2,12 +2,11 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace companyApp.Server.DB_Entities;
-[Table("company")]
-public class CompanyEntity
+
+public class AgentViewEntity
 {
-    [Key]
-    [Column("company_id")]
-    public int CompanyId { get; set; }
+    [Column("agent_id")]
+    public int AgentId { get; set; }
 
     [Required]
     [Column("short_name")]
@@ -60,7 +59,8 @@ public class CompanyEntity
     [StringLength(30)]
     public string RepPhone { get; set; } = string.Empty;
 
-    [Column("deleted_at")]
-    public DateTimeOffset? DeletedAt { get; set; }
-}
+    [Required]
+    [Column("priority")]
+    public bool Priority { get; set; }
 
+}

@@ -1,1 +1,2 @@
 C:\Users\nikiv\Desktop\MyProjects\Rowi practise\app\companyApp\companyapp.client\obj\Debug\companyapp.client.esproj.CoreCompileInputs.cache
+C:\Users\nikiv\Desktop\MyProjects\Rowi practise\companyApp\companyapp.client\obj\Debug\companyapp.client.esproj.CoreCompileInputs.cache

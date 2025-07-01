@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "W67TMfrDlTs=",
+  "dgSpecHash": "cpjLDOu8JrE=",
   "success": true,
-  "projectFilePath": "C:\\Users\\nikiv\\Desktop\\MyProjects\\Rowi practise\\app\\companyApp\\companyApp.Server\\companyApp.Server.csproj",
+  "projectFilePath": "C:\\Users\\nikiv\\Desktop\\MyProjects\\Rowi practise\\companyApp\\companyApp.Server\\companyApp.Server.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\nikiv\\.nuget\\packages\\microsoft.aspnetcore.spaproxy\\8.0.17\\microsoft.aspnetcore.spaproxy.8.0.17.nupkg.sha512",
     "C:\\Users\\nikiv\\.nuget\\packages\\microsoft.entityframeworkcore\\9.0.1\\microsoft.entityframeworkcore.9.0.1.nupkg.sha512",

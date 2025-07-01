@@ -3,7 +3,7 @@
 "ServerUrl": "https://localhost:63141",
 "RedirectUrl": "",
 "LaunchCommand": "npm run dev",
-"WorkingDirectory": "C:\\Users\\nikiv\\Desktop\\MyProjects\\Rowi practise\\app\\companyApp\\companyApp.Server\\..\\companyapp.client",
+"WorkingDirectory": "C:\\Users\\nikiv\\Desktop\\MyProjects\\Rowi practise\\companyApp\\companyApp.Server\\..\\companyapp.client",
 "MaxTimeoutInSeconds": "120",
 "KeepRunning": "false"
 }

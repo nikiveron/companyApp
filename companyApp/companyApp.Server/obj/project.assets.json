@@ -1214,11 +1214,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\nikiv\\Desktop\\MyProjects\\Rowi practise\\app\\companyApp\\companyApp.Server\\companyApp.Server.csproj",
+      "projectUniqueName": "C:\\Users\\nikiv\\Desktop\\MyProjects\\Rowi practise\\companyApp\\companyApp.Server\\companyApp.Server.csproj",
       "projectName": "companyApp.Server",
-      "projectPath": "C:\\Users\\nikiv\\Desktop\\MyProjects\\Rowi practise\\app\\companyApp\\companyApp.Server\\companyApp.Server.csproj",
+      "projectPath": "C:\\Users\\nikiv\\Desktop\\MyProjects\\Rowi practise\\companyApp\\companyApp.Server\\companyApp.Server.csproj",
       "packagesPath": "C:\\Users\\nikiv\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\nikiv\\Desktop\\MyProjects\\Rowi practise\\app\\companyApp\\companyApp.Server\\obj\\",
+      "outputPath": "C:\\Users\\nikiv\\Desktop\\MyProjects\\Rowi practise\\companyApp\\companyApp.Server\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
