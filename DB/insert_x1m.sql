@@ -14,7 +14,7 @@ SELECT
 	'8-999-' || gs AS rep_phone
 FROM generate_series(1, 1000000) AS gs; 
 
-SELECT * FROM bank_agent_relation;
+SELECT * FROM company;
 
 DO $$
 BEGIN
@@ -40,6 +40,6 @@ END$$;
 DO $$
 BEGIN
 FOR i IN 1..333333 LOOP
-    INSERT INTO bank_agent_relation (bank_id, agent_id) VALUES (TRUNC(RANDOM() * 333333), 666666 - TRUNC(RANDOM() * 333333));
+    INSERT INTO bank_agent_relation (bank_id, agent_id) VALUES (1 + TRUNC(RANDOM() * 333332), 666666 - TRUNC(RANDOM() * 333333));
 END LOOP;
 END$$;

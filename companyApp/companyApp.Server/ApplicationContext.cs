@@ -1,4 +1,4 @@
-﻿using companyApp.Server.DB_Entities;
+﻿using companyApp.Server.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace companyApp.Server;
@@ -14,16 +14,43 @@ public class ApplicationContext : DbContext
     public ApplicationContext(DbContextOptions<ApplicationContext> options)
         : base(options)
     {
-        Database.EnsureCreated();   // создаем базу данных при первом обращении
+        Database.Migrate(); 
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<CompanyEntity>().HasData(
-                new CompanyEntity { CompanyId = 1 }
-        );
-        modelBuilder.Entity<AgentEntity>().HasData(
-            new AgentEntity { AgentId = 2 }
-        );
+        modelBuilder.Entity<AgentEntity>()
+            .HasOne(a => a.Company)
+            .WithOne(c => c.Agent)
+            .HasForeignKey<AgentEntity>(a => a.AgentId);
+
+        modelBuilder.Entity<AgentEntity>()
+            .HasMany(a => a.Banks)
+            .WithMany(b => b.Agents)
+            .UsingEntity<BankAgentRelationEntity>(
+                j => j
+                    .HasOne(bar => bar.Bank)
+                    .WithMany()
+                    .HasForeignKey(bar => bar.BankId),
+                j => j
+                    .HasOne(bar => bar.Agent)
+                    .WithMany()
+                    .HasForeignKey(bar => bar.AgentId),
+                j =>
+                {
+                    j.HasKey(t => new { t.BankId, t.AgentId });
+                    j.ToTable("bank_agent_relation");
+                });
+
+        modelBuilder.Entity<CompanyEntity>()
+            .HasOne(c => c.Bank)
+            .WithOne(b => b.Company)
+            .HasForeignKey<BankEntity>(b => b.BankId);
+
+        modelBuilder.Entity<CompanyEntity>()
+            .HasOne(c => c.Client)
+            .WithOne(cl => cl.Company)
+            .HasForeignKey<ClientEntity>(cl => cl.ClientId);
+
         modelBuilder.Entity<AgentViewEntity>(ave =>
         {
             ave.HasNoKey();

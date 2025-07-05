@@ -1,5 +1,5 @@
 using companyApp.Server;
-using companyApp.Server.DB_Entities;
+using companyApp.Server.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

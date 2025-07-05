@@ -1,11 +1,11 @@
 ﻿using companyApp.Server;
-using companyApp.Server.DB_Entities;
+using companyApp.Server.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace companyApp.Server.Controllers;
 [ApiController]
-[Route("api/[controller]")]
+[Route("[controller]")]
 public class AgentController(ApplicationContext context, ILogger<CompanyController> logger) : ControllerBase
 {
     [HttpGet]
