@@ -1,22 +1,21 @@
 ﻿using companyApp.Server;
+using companyApp.Server.Interfaces;
+using companyApp.Server.Models.DTOs;
 using companyApp.Server.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace companyApp.Server.Controllers;
 [ApiController]
-[Route("[controller]")]
-public class AgentController(ApplicationContext context, ILogger<CompanyController> logger) : ControllerBase
+[Route("agents")]
+public class AgentController(IAgent agent, ILogger<CompanyController> logger) : ControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<AgentEntity>>> GetAgents(CancellationToken cancellationToken)
+    public async Task<ActionResult<IEnumerable<AgentDTO>>> GetAgents(CancellationToken cancellationToken)
     {
         try
         {
-            var agents = await context.AgentsView
-                .OrderBy(a =>  a.AgentId)
-                .Take(10)
-                .ToListAsync(cancellationToken);
+            var agents = await agent.Get(cancellationToken);
             return Ok(agents);
         }
         catch (Exception ex) 

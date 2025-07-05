@@ -1,11 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace companyApp.Server.Models.DTOs
+﻿namespace companyApp.Server.Models.DTOs
 {
-    public class AgentDTO
+    public class BankDTO
     {
-        public int AgentId { get; set; }
+        public int BankId { get; set; }
 
         public string RepLastName { get; set; } = string.Empty;
         public string RepFirstName { get; set; } = string.Empty;
@@ -20,7 +17,7 @@ namespace companyApp.Server.Models.DTOs
         public long Ogrn { get; set; }
         public DateTime OgrnDateOfIssue { get; set; }
 
-        public List<BankDTO> Banks { get; set; } = new List<BankDTO>();
+        //public List<AgentDTO> Agents { get; set; } = new List<AgentDTO>();
 
         public bool Priority { get; set; }
     }
