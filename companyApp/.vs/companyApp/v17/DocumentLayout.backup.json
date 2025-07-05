@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\nikiv\\Desktop\\MyProjects\\Rowi practise\\companyApp\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A1641B92-C1C5-4AC1-B4E7-30FACDB69DA5}|companyApp.Server\\companyApp.Server.csproj|c:\\users\\nikiv\\desktop\\myprojects\\rowi practise\\companyapp\\companyapp.server\\controllers\\agentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1641B92-C1C5-4AC1-B4E7-30FACDB69DA5}|companyApp.Server\\companyApp.Server.csproj|solutionrelative:companyapp.server\\controllers\\agentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A1641B92-C1C5-4AC1-B4E7-30FACDB69DA5}|companyApp.Server\\companyApp.Server.csproj|c:\\users\\nikiv\\desktop\\myprojects\\rowi practise\\companyapp\\companyapp.server\\interfaces\\iagent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A1641B92-C1C5-4AC1-B4E7-30FACDB69DA5}|companyApp.Server\\companyApp.Server.csproj|solutionrelative:companyapp.server\\interfaces\\iagent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A1641B92-C1C5-4AC1-B4E7-30FACDB69DA5}|companyApp.Server\\companyApp.Server.csproj|c:\\users\\nikiv\\desktop\\myprojects\\rowi practise\\companyapp\\companyapp.server\\controllers\\agentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A1641B92-C1C5-4AC1-B4E7-30FACDB69DA5}|companyApp.Server\\companyApp.Server.csproj|solutionrelative:companyapp.server\\controllers\\agentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A1641B92-C1C5-4AC1-B4E7-30FACDB69DA5}|companyApp.Server\\companyApp.Server.csproj|c:\\users\\nikiv\\desktop\\myprojects\\rowi practise\\companyapp\\companyapp.server\\models\\entities\\agententity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1641B92-C1C5-4AC1-B4E7-30FACDB69DA5}|companyApp.Server\\companyApp.Server.csproj|solutionrelative:companyapp.server\\models\\entities\\agententity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A1641B92-C1C5-4AC1-B4E7-30FACDB69DA5}|companyApp.Server\\companyApp.Server.csproj|c:\\users\\nikiv\\desktop\\myprojects\\rowi practise\\companyapp\\companyapp.server\\models\\dtos\\bankdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -29,10 +33,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A1641B92-C1C5-4AC1-B4E7-30FACDB69DA5}|companyApp.Server\\companyApp.Server.csproj|c:\\users\\nikiv\\desktop\\myprojects\\rowi practise\\companyapp\\companyapp.server\\models\\entities\\companyentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A1641B92-C1C5-4AC1-B4E7-30FACDB69DA5}|companyApp.Server\\companyApp.Server.csproj|solutionrelative:companyapp.server\\models\\entities\\companyentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A1641B92-C1C5-4AC1-B4E7-30FACDB69DA5}|companyApp.Server\\companyApp.Server.csproj|c:\\users\\nikiv\\desktop\\myprojects\\rowi practise\\companyapp\\companyapp.server\\models\\entities\\agententity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A1641B92-C1C5-4AC1-B4E7-30FACDB69DA5}|companyApp.Server\\companyApp.Server.csproj|solutionrelative:companyapp.server\\models\\entities\\agententity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,7 +42,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 771,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -58,33 +58,32 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "IAgent.cs",
               "DocumentMoniker": "C:\\Users\\nikiv\\Desktop\\MyProjects\\Rowi practise\\companyApp\\companyApp.Server\\Interfaces\\IAgent.cs",
               "RelativeDocumentMoniker": "companyApp.Server\\Interfaces\\IAgent.cs",
               "ToolTip": "C:\\Users\\nikiv\\Desktop\\MyProjects\\Rowi practise\\companyApp\\companyApp.Server\\Interfaces\\IAgent.cs",
               "RelativeToolTip": "companyApp.Server\\Interfaces\\IAgent.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAAACoAAAAOAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEIAAAA+AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-05T18:32:05.639Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-05T18:32:05.639Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "AgentController.cs",
               "DocumentMoniker": "C:\\Users\\nikiv\\Desktop\\MyProjects\\Rowi practise\\companyApp\\companyApp.Server\\Controllers\\AgentController.cs",
               "RelativeDocumentMoniker": "companyApp.Server\\Controllers\\AgentController.cs",
               "ToolTip": "C:\\Users\\nikiv\\Desktop\\MyProjects\\Rowi practise\\companyApp\\companyApp.Server\\Controllers\\AgentController.cs",
               "RelativeToolTip": "companyApp.Server\\Controllers\\AgentController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABIAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-05T18:21:19.365Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "WeatherForecastController.cs",
               "DocumentMoniker": "C:\\Users\\nikiv\\Desktop\\MyProjects\\Rowi practise\\companyApp\\companyApp.Server\\Controllers\\WeatherForecastController.cs",
               "RelativeDocumentMoniker": "companyApp.Server\\Controllers\\WeatherForecastController.cs",
@@ -92,12 +91,11 @@
               "RelativeToolTip": "companyApp.Server\\Controllers\\WeatherForecastController.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAAB0AAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T20:17:02.98Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-30T20:17:02.98Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "BankDTO.cs",
               "DocumentMoniker": "C:\\Users\\nikiv\\Desktop\\MyProjects\\Rowi practise\\companyApp\\companyApp.Server\\Models\\DTOs\\BankDTO.cs",
               "RelativeDocumentMoniker": "companyApp.Server\\Models\\DTOs\\BankDTO.cs",
@@ -105,12 +103,11 @@
               "RelativeToolTip": "companyApp.Server\\Models\\DTOs\\BankDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-05T18:14:49.272Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-05T18:14:49.272Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "ApplicationContext.cs",
               "DocumentMoniker": "C:\\Users\\nikiv\\Desktop\\MyProjects\\Rowi practise\\companyApp\\companyApp.Server\\ApplicationContext.cs",
               "RelativeDocumentMoniker": "companyApp.Server\\ApplicationContext.cs",
@@ -118,12 +115,11 @@
               "RelativeToolTip": "companyApp.Server\\ApplicationContext.cs",
               "ViewState": "AgIAAAEAAAAAAAAAAAAawA8AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-05T16:47:51.515Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-05T16:47:51.515Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "BankEntity.cs",
               "DocumentMoniker": "C:\\Users\\nikiv\\Desktop\\MyProjects\\Rowi practise\\companyApp\\companyApp.Server\\Models\\Entities\\BankEntity.cs",
               "RelativeDocumentMoniker": "companyApp.Server\\Models\\Entities\\BankEntity.cs",
@@ -131,12 +127,11 @@
               "RelativeToolTip": "companyApp.Server\\Models\\Entities\\BankEntity.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-05T18:15:23.558Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-05T18:15:23.558Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "CompanyEntity.cs",
               "DocumentMoniker": "C:\\Users\\nikiv\\Desktop\\MyProjects\\Rowi practise\\companyApp\\companyApp.Server\\Models\\Entities\\CompanyEntity.cs",
               "RelativeDocumentMoniker": "companyApp.Server\\Models\\Entities\\CompanyEntity.cs",
@@ -144,21 +139,19 @@
               "RelativeToolTip": "companyApp.Server\\Models\\Entities\\CompanyEntity.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-05T18:12:21.93Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-05T18:12:21.93Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 2,
               "Title": "AgentEntity.cs",
               "DocumentMoniker": "C:\\Users\\nikiv\\Desktop\\MyProjects\\Rowi practise\\companyApp\\companyApp.Server\\Models\\Entities\\AgentEntity.cs",
               "RelativeDocumentMoniker": "companyApp.Server\\Models\\Entities\\AgentEntity.cs",
               "ToolTip": "C:\\Users\\nikiv\\Desktop\\MyProjects\\Rowi practise\\companyApp\\companyApp.Server\\Models\\Entities\\AgentEntity.cs",
               "RelativeToolTip": "companyApp.Server\\Models\\Entities\\AgentEntity.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAEAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-05T18:11:57.513Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-05T18:11:57.513Z"
             }
           ]
         }

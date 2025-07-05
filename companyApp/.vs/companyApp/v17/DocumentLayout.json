@@ -66,8 +66,7 @@
               "RelativeToolTip": "companyApp.Server\\Interfaces\\IAgent.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAEIAAAA+AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-05T18:32:05.639Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-05T18:32:05.639Z"
             },
             {
               "$type": "Document",
@@ -92,8 +91,7 @@
               "RelativeToolTip": "companyApp.Server\\Controllers\\WeatherForecastController.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAAB0AAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T20:17:02.98Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-30T20:17:02.98Z"
             },
             {
               "$type": "Document",
@@ -105,8 +103,7 @@
               "RelativeToolTip": "companyApp.Server\\Models\\DTOs\\BankDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-05T18:14:49.272Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-05T18:14:49.272Z"
             },
             {
               "$type": "Document",
@@ -118,8 +115,7 @@
               "RelativeToolTip": "companyApp.Server\\ApplicationContext.cs",
               "ViewState": "AgIAAAEAAAAAAAAAAAAawA8AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-05T16:47:51.515Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-05T16:47:51.515Z"
             },
             {
               "$type": "Document",
@@ -131,8 +127,7 @@
               "RelativeToolTip": "companyApp.Server\\Models\\Entities\\BankEntity.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-05T18:15:23.558Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-05T18:15:23.558Z"
             },
             {
               "$type": "Document",
@@ -144,8 +139,7 @@
               "RelativeToolTip": "companyApp.Server\\Models\\Entities\\CompanyEntity.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-05T18:12:21.93Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-05T18:12:21.93Z"
             },
             {
               "$type": "Document",
@@ -157,8 +151,7 @@
               "RelativeToolTip": "companyApp.Server\\Models\\Entities\\AgentEntity.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-05T18:11:57.513Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-05T18:11:57.513Z"
             }
           ]
         }
