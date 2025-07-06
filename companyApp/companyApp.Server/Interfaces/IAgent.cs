@@ -1,20 +1,18 @@
 ﻿using companyApp.Server.Models.DTOs;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 
 namespace companyApp.Server.Interfaces;
 
-public interface IAgent
+public interface IAgentRepository
 {
     Task<IEnumerable<AgentDTO>> Get(CancellationToken cancellationToken);
-    Task<AgentDTO> Get(int agentId);
-    void Create(AgentDTO agentDTO);
-    void Update(AgentDTO agentDTO);
-    Task<AgentDTO> Delete(int agentId);
+    Task<AgentDTO?> Get(int agentId, CancellationToken cancellationToken);
+    void Create(AgentDTO agentDTO, CancellationToken cancellationToken);
+    void Update(AgentDTO agentDTO, CancellationToken cancellationToken);
+    Task<AgentDTO?> Delete(int agentId, CancellationToken cancellationToken);
 }
 
-public class Agent(ApplicationContext context) : IAgent
+public class AgentRepository(ApplicationContext context) : IAgentRepository
 {
     public async Task<IEnumerable<AgentDTO>> Get(CancellationToken cancellationToken)
     {
@@ -45,16 +43,46 @@ public class Agent(ApplicationContext context) : IAgent
             .ToListAsync(cancellationToken);
         return agents;
     }
-    public async Task<AgentDTO> Get(int Id) // в разработке
+    public async Task<AgentDTO?> Get(int Id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();    
+        var a = await context.Agents
+            .Include(agent => agent.Company)
+            .Include(agent => agent.Banks)
+                .ThenInclude(bank => bank.Company)
+            .FirstOrDefaultAsync(agent => agent.AgentId == Id, cancellationToken);
+        
+        if (a == null || a.Company == null)
+            return null;
+            
+        AgentDTO agent = new()
+        {
+            AgentId = a.AgentId,
+            RepLastName = a.Company.RepLastName,
+            RepFirstName = a.Company.RepFirstName,
+            RepPatronymic = a.Company.RepPatronymic,
+            RepEmail = a.Company.RepEmail,
+            RepPhone = a.Company.RepPhone,
+            ShortName = a.Company.ShortName,
+            FullName = a.Company.FullName,
+            Inn = a.Company.Inn,
+            Kpp = a.Company.Kpp,
+            Ogrn = a.Company.Ogrn,
+            OgrnDateOfIssue = a.Company.OgrnDateOfIssue,
+            Banks = a.Banks?.Select(b => new BankDTO
+            {
+                BankId = b.BankId,
+                ShortName = b.Company.ShortName
+            }).ToList() ?? [],
+            Priority = a.Priority
+        };
+        return agent;
     }
-    public async void Create(AgentDTO item) // в разработке
+    public async void Create(AgentDTO item, CancellationToken cancellationToken) // в разработке
     {
         //await context.AgentDTO.Add(item);
         context.SaveChanges();
     }
-    public async void Update(AgentDTO updatedTodoItem) // в разработке
+    public async void Update(AgentDTO updatedTodoItem, CancellationToken cancellationToken) // в разработке
     {
         //AgentDTO currentItem = await Get(updatedTodoItem.Id);
         //currentItem.IsComplete = updatedTodoItem.IsComplete;
@@ -64,9 +92,9 @@ public class Agent(ApplicationContext context) : IAgent
         context.SaveChanges();
     }
 
-    public async Task<AgentDTO> Delete(int Id) // в разработке
+    public async Task<AgentDTO> Delete(int Id, CancellationToken cancellationToken) // в разработке
     {
-        AgentDTO agentDTO = await Get(Id);
+        AgentDTO agentDTO = await Get(Id, cancellationToken);
 
         if (agentDTO != null)
         {
