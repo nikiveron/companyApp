@@ -1,5 +1,9 @@
 ﻿using companyApp.Server.Models.DTOs;
+using companyApp.Server.Models.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace companyApp.Server.Interfaces;
 
@@ -7,7 +11,7 @@ public interface IAgentRepository
 {
     Task<IEnumerable<AgentDTO>> Get(CancellationToken cancellationToken);
     Task<AgentDTO?> Get(int agentId, CancellationToken cancellationToken);
-    void Create(AgentDTO agentDTO, CancellationToken cancellationToken);
+    Task<int> Create(CreateAgentDTO agentDTO, CancellationToken cancellationToken);
     void Update(AgentDTO agentDTO, CancellationToken cancellationToken);
     Task<AgentDTO?> Delete(int agentId, CancellationToken cancellationToken);
 }
@@ -29,7 +33,7 @@ public class AgentRepository(ApplicationContext context) : IAgentRepository
                 ShortName = a.Company.ShortName,
                 FullName = a.Company.FullName,
                 Inn = a.Company.Inn,
-                Kpp = a.Company.Kpp,   
+                Kpp = a.Company.Kpp,
                 Ogrn = a.Company.Ogrn,
                 OgrnDateOfIssue = a.Company.OgrnDateOfIssue,
                 Banks = a.Banks.Select(b => new BankDTO
@@ -50,10 +54,10 @@ public class AgentRepository(ApplicationContext context) : IAgentRepository
             .Include(agent => agent.Banks)
                 .ThenInclude(bank => bank.Company)
             .FirstOrDefaultAsync(agent => agent.AgentId == Id, cancellationToken);
-        
+
         if (a == null || a.Company == null)
             return null;
-            
+
         AgentDTO agent = new()
         {
             AgentId = a.AgentId,
@@ -77,10 +81,38 @@ public class AgentRepository(ApplicationContext context) : IAgentRepository
         };
         return agent;
     }
-    public async void Create(AgentDTO item, CancellationToken cancellationToken) // в разработке
+    public async Task<int> Create(CreateAgentDTO agent, CancellationToken cancellationToken)
     {
-        //await context.AgentDTO.Add(item);
-        context.SaveChanges();
+        await CreateAgentDTOCheck.UniqueAgentCheck(context, agent, cancellationToken);
+        var agentEntity = new AgentEntity
+        {
+            DeletedAt = null,
+            Banks = agent.Banks?.Select(bank => context.Banks.FirstOrDefault(b => b.BankId == bank))
+                .Where(bank => bank != null)
+                .ToList() ?? [],
+            Company = await context.Companies.FirstOrDefaultAsync(c => c.Inn == agent.Inn, cancellationToken) ?? new CompanyEntity
+            {
+                ShortName = agent.ShortName,
+                FullName = agent.FullName,
+                Inn = agent.Inn,
+                Kpp = agent.Kpp,
+                Ogrn = agent.Ogrn,
+                OgrnDateOfIssue = agent.OgrnDateOfIssue,
+                RepLastName = agent.RepLastName,
+                RepFirstName = agent.RepFirstName,
+                RepPatronymic = agent.RepPatronymic,
+                RepEmail = agent.RepEmail,
+                RepPhone = agent.RepPhone,
+                DeletedAt = null
+            },
+            Priority = agent.Priority
+        };
+        context.Agents.Add(agentEntity);
+        await context.SaveChangesAsync(cancellationToken);
+        
+        return await context.Agents
+            .Select(a => a.AgentId)
+            .FirstOrDefaultAsync(a => a == agentEntity.AgentId, cancellationToken);
     }
     public async void Update(AgentDTO updatedTodoItem, CancellationToken cancellationToken) // в разработке
     {

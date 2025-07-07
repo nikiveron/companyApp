@@ -1,23 +1,42 @@
-﻿namespace companyApp.Server.Models.DTOs;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace companyApp.Server.Models.DTOs;
 
 public class BankDTO
 {
     public int BankId { get; set; }
 
+    [Required(ErrorMessage = "Фамилия представителя обязательна")]
     public string RepLastName { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "Имя представителя обязательно")]
     public string RepFirstName { get; set; } = string.Empty;
     public string RepPatronymic { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "Email представителя обязателен")]
+    [EmailAddress(ErrorMessage = "Некорректный формат email")]
     public string RepEmail { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "Телефон представителя обязателен")]
     public string RepPhone { get; set; } = string.Empty;
 
+    [Required(ErrorMessage = "Краткое название компании обязательно")]
     public string ShortName { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "Полное название компании обязательно")]
     public string FullName { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "ИНН обязателен")]
     public long Inn { get; set; }
+
+    [Required(ErrorMessage = "КПП обязателен")]
     public int Kpp { get; set; }
+
+    [Required(ErrorMessage = "ОГРН обязателен")]
     public long Ogrn { get; set; }
+
+    [Required(ErrorMessage = "Дата выдачи ОГРН обязательна")]
     public DateTime OgrnDateOfIssue { get; set; }
-
-    //public List<AgentDTO> Agents { get; set; } = new List<AgentDTO>();
-
+    
     public bool Priority { get; set; }
 }

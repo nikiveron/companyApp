@@ -4,10 +4,10 @@ using Microsoft.EntityFrameworkCore;
 namespace companyApp.Server;
 public class ApplicationContext : DbContext
 {
-    public DbSet<CompanyEntity> Companies { get; set; } = null!;
-    public DbSet<AgentEntity> Agents { get; set; } = null!;
-    public DbSet<BankEntity> Banks { get; set; } = null!;
-    public DbSet<ClientEntity> Clients { get; set; } = null!;
+    public DbSet<CompanyEntity> Companies => Set<CompanyEntity>();
+    public DbSet<AgentEntity> Agents => Set<AgentEntity>();
+    public DbSet<BankEntity> Banks => Set<BankEntity>();
+    public DbSet<ClientEntity> Clients => Set<ClientEntity>();
 
     public DbSet<AgentViewEntity> AgentsView { get; set; } = null!;
 
