@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace companyApp.Server.Interfaces;
 
@@ -12,7 +13,7 @@ public interface IAgentRepository
     Task<IEnumerable<AgentDTO>> Get(CancellationToken cancellationToken);
     Task<AgentDTO?> Get(int agentId, CancellationToken cancellationToken);
     Task<int> Create(CreateAgentDTO agentDTO, CancellationToken cancellationToken);
-    void Update(AgentDTO agentDTO, CancellationToken cancellationToken);
+    Task Update(PutAgentDTO agentDTO, CancellationToken cancellationToken);
     Task<bool> Delete(int agentId, CancellationToken cancellationToken);
 }
 
@@ -22,7 +23,7 @@ public class AgentRepository(ApplicationContext context) : IAgentRepository
     {
         var agents = await context.Agents
             .OrderBy(a => a.AgentId)
-            .Where(a=> a.DeletedAt == null)
+            .Where(a => a.DeletedAt == null)
             .Select(a => new AgentDTO
             {
                 AgentId = a.AgentId,
@@ -114,23 +115,44 @@ public class AgentRepository(ApplicationContext context) : IAgentRepository
             .Select(a => a.AgentId)
             .FirstOrDefaultAsync(a => a == agentEntity.AgentId, cancellationToken);
     }
-    public async void Update(AgentDTO updatedTodoItem, CancellationToken cancellationToken) // в разработке
+    public async Task Update(PutAgentDTO agent, CancellationToken cancellationToken)
     {
-        //AgentDTO currentItem = await Get(updatedTodoItem.Id);
-        //currentItem.IsComplete = updatedTodoItem.IsComplete;
-        //currentItem.TaskDescription = updatedTodoItem.TaskDescription;
+        await PutAgentDTOCheck.UniqueAgentCheck(context, agent, cancellationToken);
+        var currentAgent = await context.Agents
+            .Include(a => a.Company)
+            .Include(a => a.Banks)
+            .FirstOrDefaultAsync(a => a.AgentId == agent.Id && a.DeletedAt == null, cancellationToken);
+            
+        if (currentAgent == null)
+        {
+            throw new Exception("Агент не найден!");
+        }
+        currentAgent.Company.RepLastName = agent.RepLastName;
+        currentAgent.Company.RepFirstName = agent.RepFirstName;
+        currentAgent.Company.RepPatronymic = agent.RepPatronymic;
+        currentAgent.Company.RepEmail = agent.RepEmail;
+        currentAgent.Company.RepPhone = agent.RepPhone;
+        currentAgent.Company.ShortName = agent.ShortName;
+        currentAgent.Company.FullName = agent.FullName;
+        currentAgent.Company.Inn = agent.Inn;
+        currentAgent.Company.Kpp = agent.Kpp;
+        currentAgent.Company.Ogrn = agent.Ogrn;
+        currentAgent.Company.OgrnDateOfIssue = agent.OgrnDateOfIssue;
+        currentAgent.Banks = agent.Banks
+            .Select(bankId => context.Banks.FirstOrDefault(b => b.BankId == bankId))
+            .Where(bank => bank != null)
+            .ToList();
+        currentAgent.Priority = agent.Priority;
 
-        //await context.TodoItems.Update(currentItem);
-        context.SaveChanges();
+        await context.SaveChangesAsync(cancellationToken);
     }
-
-    public async Task<bool> Delete(int Id, CancellationToken cancellationToken) // в разработке
+    public async Task<bool> Delete(int Id, CancellationToken cancellationToken)
     {
-        var agent = await context.Agents.FirstOrDefaultAsync(a => a.AgentId == Id, cancellationToken);
+        var agent = await context.Agents.FirstOrDefaultAsync(a => a.AgentId == Id && a.DeletedAt == null, cancellationToken);
         if (agent != null)
         {
             agent.DeletedAt = DateTime.UtcNow;
-            _ = context.SaveChangesAsync(cancellationToken);
+            await context.SaveChangesAsync(cancellationToken);
             return true;
         }
 

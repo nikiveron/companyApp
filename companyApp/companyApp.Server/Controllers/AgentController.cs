@@ -87,21 +87,28 @@ public class AgentController(IAgentRepository AgentRepository) : ControllerBase
 
 
     [HttpPut("{id}")]
-    public IActionResult Update([FromRoute] int id, [FromBody] PutAgentDTO agent)
+    public async Task<IActionResult> Update([FromRoute] int id, [FromBody] PutAgentDTO agent, CancellationToken cancellationToken)
     {
-        if (updatedTodoItem == null || updatedTodoItem.Id != Id)
+        try
         {
-            return BadRequest();
-        }
+            if (agent == null || agent.Id != id)
+            {
+                return BadRequest();
+            }
 
-        var todoItem = TodoRepository.Get(Id);
-        if (todoItem == null)
+            var existingAgent = await AgentRepository.Get(id, cancellationToken);
+            if (existingAgent == null)
+            {
+                return NotFound();
+            }
+
+            await AgentRepository.Update(agent, cancellationToken);
+            return Ok();
+        }
+        catch (Exception ex)
         {
-            return NotFound();
+            return StatusCode(500, $"Внутренняя ошибка сервера: {ex.Message}");
         }
-
-        TodoRepository.Update(updatedTodoItem);
-        return RedirectToRoute("GetAllItems");
     }
 
 }
