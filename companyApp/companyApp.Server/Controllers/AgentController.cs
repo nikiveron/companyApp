@@ -64,5 +64,45 @@ public class AgentController(IAgentRepository AgentRepository) : ControllerBase
             return StatusCode(500, $"Внутренняя ошибка сервера: {ex.Message}");
         }
     }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete([FromRoute] int id, CancellationToken cancellationToken)
+    {
+        try
+        {
+            bool deletedStatus = await AgentRepository.Delete(id, cancellationToken);
+
+            if (!deletedStatus)
+            {
+                return BadRequest("Агент не был удален.");
+            }
+
+            return Ok("Агент успешно удален.");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Внутренняя ошибка сервера: {ex.Message}");
+        }
+    }
+
+
+    [HttpPut("{id}")]
+    public IActionResult Update([FromRoute] int id, [FromBody] PutAgentDTO agent)
+    {
+        if (updatedTodoItem == null || updatedTodoItem.Id != Id)
+        {
+            return BadRequest();
+        }
+
+        var todoItem = TodoRepository.Get(Id);
+        if (todoItem == null)
+        {
+            return NotFound();
+        }
+
+        TodoRepository.Update(updatedTodoItem);
+        return RedirectToRoute("GetAllItems");
+    }
+
 }
 

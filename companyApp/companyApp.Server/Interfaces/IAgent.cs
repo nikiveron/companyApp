@@ -13,7 +13,7 @@ public interface IAgentRepository
     Task<AgentDTO?> Get(int agentId, CancellationToken cancellationToken);
     Task<int> Create(CreateAgentDTO agentDTO, CancellationToken cancellationToken);
     void Update(AgentDTO agentDTO, CancellationToken cancellationToken);
-    Task<AgentDTO?> Delete(int agentId, CancellationToken cancellationToken);
+    Task<bool> Delete(int agentId, CancellationToken cancellationToken);
 }
 
 public class AgentRepository(ApplicationContext context) : IAgentRepository
@@ -22,6 +22,7 @@ public class AgentRepository(ApplicationContext context) : IAgentRepository
     {
         var agents = await context.Agents
             .OrderBy(a => a.AgentId)
+            .Where(a=> a.DeletedAt == null)
             .Select(a => new AgentDTO
             {
                 AgentId = a.AgentId,
@@ -55,7 +56,7 @@ public class AgentRepository(ApplicationContext context) : IAgentRepository
                 .ThenInclude(bank => bank.Company)
             .FirstOrDefaultAsync(agent => agent.AgentId == Id, cancellationToken);
 
-        if (a == null || a.Company == null)
+        if (a == null || a.Company == null || a.DeletedAt != null)
             return null;
 
         AgentDTO agent = new()
@@ -109,7 +110,6 @@ public class AgentRepository(ApplicationContext context) : IAgentRepository
         };
         context.Agents.Add(agentEntity);
         await context.SaveChangesAsync(cancellationToken);
-        
         return await context.Agents
             .Select(a => a.AgentId)
             .FirstOrDefaultAsync(a => a == agentEntity.AgentId, cancellationToken);
@@ -124,17 +124,17 @@ public class AgentRepository(ApplicationContext context) : IAgentRepository
         context.SaveChanges();
     }
 
-    public async Task<AgentDTO> Delete(int Id, CancellationToken cancellationToken) // в разработке
+    public async Task<bool> Delete(int Id, CancellationToken cancellationToken) // в разработке
     {
-        AgentDTO agentDTO = await Get(Id, cancellationToken);
-
-        if (agentDTO != null)
+        var agent = await context.Agents.FirstOrDefaultAsync(a => a.AgentId == Id, cancellationToken);
+        if (agent != null)
         {
-            //await context.TodoItems.Remove(agentDTO);
-            context.SaveChanges();
+            agent.DeletedAt = DateTime.UtcNow;
+            _ = context.SaveChangesAsync(cancellationToken);
+            return true;
         }
 
-        return agentDTO;
+        return false;
     }
 }
 
