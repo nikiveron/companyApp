@@ -1,5 +1,6 @@
 using companyApp.Server;
 using companyApp.Server.Interfaces;
+using companyApp.Server.Mapping;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +9,7 @@ string connection = builder.Configuration.GetConnectionString("DefaultConnection
 
 builder.Services.AddDbContext<ApplicationContext>(options => options.UseNpgsql(connection));
 builder.Services.AddScoped<IAgentRepository, AgentRepository>();
-
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<AppMappingProfile>());
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -16,7 +17,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Добавляем CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>

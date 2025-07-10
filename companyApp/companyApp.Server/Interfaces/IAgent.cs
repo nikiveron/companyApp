@@ -1,123 +1,66 @@
-﻿using companyApp.Server.Models.DTOs;
+﻿using AutoMapper;
+using companyApp.Server.Mapping;
+using companyApp.Server.Models.DTOs;
 using companyApp.Server.Models.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 
 namespace companyApp.Server.Interfaces;
 
 public interface IAgentRepository
 {
-    Task<IEnumerable<AgentDTO>> Get(CancellationToken cancellationToken);
-    Task<AgentDTO?> Get(int agentId, CancellationToken cancellationToken);
-    Task<int> Create(CreateAgentDTO agentDTO, CancellationToken cancellationToken);
-    Task Update(PutAgentDTO agentDTO, CancellationToken cancellationToken);
+    Task<IEnumerable<ReadAgentDTO>> Get(IMapper _mapper,CancellationToken cancellationToken);
+    Task<ReadAgentDTO?> Get(int agentId, IMapper _mapper, CancellationToken cancellationToken);
+    Task<int> Create(CreateAgentDTO agentDTO, IMapper _mapper,CancellationToken cancellationToken);
+    Task Update(UpdateAgentDTO agentDTO, IMapper mapper, CancellationToken cancellationToken);
     Task<bool> Delete(int agentId, CancellationToken cancellationToken);
 }
 
 public class AgentRepository(ApplicationContext context) : IAgentRepository
 {
-    public async Task<IEnumerable<AgentDTO>> Get(CancellationToken cancellationToken)
+    public async Task<IEnumerable<ReadAgentDTO>> Get(IMapper _mapper,CancellationToken cancellationToken)
     {
         var agents = await context.Agents
+            .Include(a => a.Company)
+            .Include(agent => agent.Banks)
+                .ThenInclude(bank => bank.Company)
             .OrderBy(a => a.AgentId)
             .Where(a => a.DeletedAt == null)
-            .Select(a => new AgentDTO
-            {
-                AgentId = a.AgentId,
-                RepLastName = a.Company.RepLastName,
-                RepFirstName = a.Company.RepFirstName,
-                RepPatronymic = a.Company.RepPatronymic,
-                RepEmail = a.Company.RepEmail,
-                RepPhone = a.Company.RepPhone,
-                ShortName = a.Company.ShortName,
-                FullName = a.Company.FullName,
-                Inn = a.Company.Inn,
-                Kpp = a.Company.Kpp,
-                Ogrn = a.Company.Ogrn,
-                OgrnDateOfIssue = a.Company.OgrnDateOfIssue,
-                Banks = a.Banks.Select(b => new BankDTO
-                {
-                    BankId = b.BankId,
-                    ShortName = b.Company.ShortName
-                }).ToList(),
-                Priority = a.Priority
-            })
             .Take(10)   // убрать потом
             .ToListAsync(cancellationToken);
-        return agents;
+
+        return agents.Select(a => _mapper.Map<ReadAgentDTO>(a));
     }
-    public async Task<AgentDTO?> Get(int Id, CancellationToken cancellationToken)
+    public async Task<ReadAgentDTO?> Get(int Id, IMapper _mapper, CancellationToken cancellationToken)
     {
-        var a = await context.Agents
+        var agent = await context.Agents
             .Include(agent => agent.Company)
             .Include(agent => agent.Banks)
                 .ThenInclude(bank => bank.Company)
             .FirstOrDefaultAsync(agent => agent.AgentId == Id, cancellationToken);
 
-        if (a == null || a.Company == null || a.DeletedAt != null)
+        if (agent == null || agent.Company == null || agent.DeletedAt != null)
             return null;
 
-        AgentDTO agent = new()
-        {
-            AgentId = a.AgentId,
-            RepLastName = a.Company.RepLastName,
-            RepFirstName = a.Company.RepFirstName,
-            RepPatronymic = a.Company.RepPatronymic,
-            RepEmail = a.Company.RepEmail,
-            RepPhone = a.Company.RepPhone,
-            ShortName = a.Company.ShortName,
-            FullName = a.Company.FullName,
-            Inn = a.Company.Inn,
-            Kpp = a.Company.Kpp,
-            Ogrn = a.Company.Ogrn,
-            OgrnDateOfIssue = a.Company.OgrnDateOfIssue,
-            Banks = a.Banks?.Select(b => new BankDTO
-            {
-                BankId = b.BankId,
-                ShortName = b.Company.ShortName
-            }).ToList() ?? [],
-            Priority = a.Priority
-        };
-        return agent;
+        return _mapper.Map<ReadAgentDTO>(agent);
     }
-    public async Task<int> Create(CreateAgentDTO agent, CancellationToken cancellationToken)
+    public async Task<int> Create(CreateAgentDTO agent, IMapper _mapper,CancellationToken cancellationToken)
     {
         await CreateAgentDTOCheck.UniqueAgentCheck(context, agent, cancellationToken);
-        var agentEntity = new AgentEntity
-        {
-            DeletedAt = null,
-            Banks = agent.Banks?.Select(bank => context.Banks.FirstOrDefault(b => b.BankId == bank))
+        AgentEntity agentEntity = _mapper.Map<AgentEntity>(agent);
+
+        agentEntity.Banks = agent.Banks?.Select(bank => context.Banks.FirstOrDefault(b => b.BankId == bank))
                 .Where(bank => bank != null)
-                .ToList() ?? [],
-            Company = await context.Companies.FirstOrDefaultAsync(c => c.Inn == agent.Inn, cancellationToken) ?? new CompanyEntity
-            {
-                ShortName = agent.ShortName,
-                FullName = agent.FullName,
-                Inn = agent.Inn,
-                Kpp = agent.Kpp,
-                Ogrn = agent.Ogrn,
-                OgrnDateOfIssue = agent.OgrnDateOfIssue,
-                RepLastName = agent.RepLastName,
-                RepFirstName = agent.RepFirstName,
-                RepPatronymic = agent.RepPatronymic,
-                RepEmail = agent.RepEmail,
-                RepPhone = agent.RepPhone,
-                DeletedAt = null
-            },
-            Priority = agent.Priority
-        };
+                .ToList() ?? [];
+        agentEntity.Company = await context.Companies.FirstOrDefaultAsync(c => c.Inn == agent.Inn, cancellationToken) ?? _mapper.Map<CompanyEntity>(agentEntity);
         context.Agents.Add(agentEntity);
         await context.SaveChangesAsync(cancellationToken);
         return await context.Agents
             .Select(a => a.AgentId)
             .FirstOrDefaultAsync(a => a == agentEntity.AgentId, cancellationToken);
     }
-    public async Task Update(PutAgentDTO agent, CancellationToken cancellationToken)
+    public async Task Update(UpdateAgentDTO agent, IMapper mapper, CancellationToken cancellationToken)
     {
-        await PutAgentDTOCheck.UniqueAgentCheck(context, agent, cancellationToken);
+        await UpdateAgentDTOCheck.UniqueAgentCheck(context, agent, cancellationToken);
         var currentAgent = await context.Agents
             .Include(a => a.Company)
             .Include(a => a.Banks)
@@ -127,22 +70,12 @@ public class AgentRepository(ApplicationContext context) : IAgentRepository
         {
             throw new Exception("Агент не найден!");
         }
-        currentAgent.Company.RepLastName = agent.RepLastName;
-        currentAgent.Company.RepFirstName = agent.RepFirstName;
-        currentAgent.Company.RepPatronymic = agent.RepPatronymic;
-        currentAgent.Company.RepEmail = agent.RepEmail;
-        currentAgent.Company.RepPhone = agent.RepPhone;
-        currentAgent.Company.ShortName = agent.ShortName;
-        currentAgent.Company.FullName = agent.FullName;
-        currentAgent.Company.Inn = agent.Inn;
-        currentAgent.Company.Kpp = agent.Kpp;
-        currentAgent.Company.Ogrn = agent.Ogrn;
-        currentAgent.Company.OgrnDateOfIssue = agent.OgrnDateOfIssue;
+
+        mapper.Map(agent, currentAgent);
         currentAgent.Banks = agent.Banks
             .Select(bankId => context.Banks.FirstOrDefault(b => b.BankId == bankId))
             .Where(bank => bank != null)
             .ToList();
-        currentAgent.Priority = agent.Priority;
 
         await context.SaveChangesAsync(cancellationToken);
     }

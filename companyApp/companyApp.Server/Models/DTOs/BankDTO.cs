@@ -38,5 +38,4 @@ public class BankDTO
     [Required(ErrorMessage = "Дата выдачи ОГРН обязательна")]
     public DateTime OgrnDateOfIssue { get; set; }
     
-    public bool Priority { get; set; }
 }

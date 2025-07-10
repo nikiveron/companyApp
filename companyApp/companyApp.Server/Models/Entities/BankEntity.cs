@@ -12,7 +12,7 @@ public class BankEntity
     [Column("deleted_at")]
     public DateTime? DeletedAt { get; set; }
 
-    public List<AgentEntity> Agents { get; set; } = new List<AgentEntity>();
+    public List<AgentEntity> Agents { get; set; } = [];
     // Навигационное свойство
     public CompanyEntity Company { get; set; } = null!;
 }

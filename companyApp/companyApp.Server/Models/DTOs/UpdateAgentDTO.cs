@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace companyApp.Server.Models.DTOs;
 
-public class PutAgentDTO
+public class UpdateAgentDTO
 {
     [Required(ErrorMessage = "Идентификатор агента обязателен")]
     public int Id { get; set; }
@@ -50,9 +50,9 @@ public class PutAgentDTO
 
 }
 
-internal class PutAgentDTOCheck() : PutAgentDTO
+internal class UpdateAgentDTOCheck() : UpdateAgentDTO
 {
-    internal static async Task UniqueAgentCheck(ApplicationContext context, PutAgentDTO agent, CancellationToken cancellationToken)
+    internal static async Task UniqueAgentCheck(ApplicationContext context, UpdateAgentDTO agent, CancellationToken cancellationToken)
     {
         if (await context.Agents.AnyAsync(c => c.Company.RepEmail == agent.RepEmail && c.AgentId != agent.Id, cancellationToken))
             throw new ArgumentException("Агент с таким представителем уже существует. Проверьте Email представителя.");

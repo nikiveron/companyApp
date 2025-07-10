@@ -1,9 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using AutoMapper;
+using companyApp.Server.Models.Entities;
+using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace companyApp.Server.Models.DTOs;
 
-public class AgentDTO
+public class ReadAgentDTO
 {
     public int AgentId { get; set; }
 
