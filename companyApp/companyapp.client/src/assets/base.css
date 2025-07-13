@@ -3,24 +3,20 @@
   --vt-c-white: #ffffff;
   --vt-c-white-soft: #d9d9d9;
   --vt-c-white-mute: #a6a6a6;
-
   --vt-c-black: #181818;
   --vt-c-black-soft: #222222;
   --vt-c-black-mute: #282828;
-
   --vt-c-indigo: #2c3e50;
-
   --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
   --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
   --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
   --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
-
-  --vt-c-text-light-1: var(250 250 250, 1);
+  --vt-c-text-light-1: rgba(250, 250, 250, 1);
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
-  --vt-c-text-dark-1: var(--vt-c-white);
-  --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
-
+  --vt-c-text-dark-1: rgb(60, 60, 60, 1);
+  --vt-c-text-dark-2: rgba(0, 0, 0, 1);
   --vt-c-button: #2c2c2c;
+  --vt-c-button-hover: #4c4c4c;
 }
 
 /* semantic color variables for this project */
@@ -33,9 +29,11 @@
   --color-border-hover: var(--vt-c-divider-light-1);
 
   --color-heading: var(--vt-c-text-light-1);
-  --color-text: var(--vt-c-text-light-1);
+  --color-text-light: var(--vt-c-text-light-1);
+  --color-text-dark: var(--vt-c-text-dark-2);
 
   --color-button: var(--vt-c-button);
+  --color-button-hover: var(--vt-c-button-hover);
 
   --section-gap: 160px;
 }

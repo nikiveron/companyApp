@@ -2,11 +2,14 @@
   import { ref } from 'vue'
   const selectedTab = ref('agent')
   import Filter from './FilterComp.vue'
+  import Info from './AgentInfoComp.vue'
 </script>
 
 <template>
   <div class="wrapper">
     <Filter/>
+    <div class="divider"/>
+    <Info/>
   </div>
 </template>
 
@@ -14,9 +17,14 @@
   .wrapper {
     display: flex;
     place-items: flex-start;
-    
+    flex-wrap: wrap;
   }
 
+  .divider {
+    background: var(--color-background-soft);
+    width: 2500px;
+    height: 1rem;
+  }
   /*
   .logo {
     display: block;

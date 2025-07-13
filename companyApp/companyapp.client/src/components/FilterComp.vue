@@ -59,7 +59,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
   .wrapper {
     display: flex;
     flex-direction: column;
@@ -149,7 +149,14 @@
     border-radius: 10px;
     font-size: 14px;
     width: 200px;
-    color: #ccc;
+    color: white;
     background: var(--color-button);
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
   }
+    .filter-button:hover {
+      background: var(--color-button-hover);
+      border-color: var(--color-button-hover);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
 </style>
