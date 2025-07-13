@@ -1,8 +1,8 @@
 /* color palette from <https://github.com/vuejs/theme> */
 :root {
   --vt-c-white: #ffffff;
-  --vt-c-white-soft: #f8f8f8;
-  --vt-c-white-mute: #d9d9d9;
+  --vt-c-white-soft: #d9d9d9;
+  --vt-c-white-mute: #a6a6a6;
 
   --vt-c-black: #181818;
   --vt-c-black-soft: #222222;
@@ -15,10 +15,12 @@
   --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
   --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
 
-  --vt-c-text-light-1: var(--vt-c-indigo);
+  --vt-c-text-light-1: var(250 250 250, 1);
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+
+  --vt-c-button: #2c2c2c;
 }
 
 /* semantic color variables for this project */
@@ -32,6 +34,8 @@
 
   --color-heading: var(--vt-c-text-light-1);
   --color-text: var(--vt-c-text-light-1);
+
+  --color-button: var(--vt-c-button);
 
   --section-gap: 160px;
 }
@@ -62,7 +66,7 @@
 body {
   min-height: 100vh;
   color: var(--color-text);
-  background: var(--color-background-mute);
+  background: var(--color-background-soft);
   transition: color 0.5s, background-color 0.5s;
   line-height: 1.6;
   font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
