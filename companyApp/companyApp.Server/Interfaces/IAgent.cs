@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using companyApp.Server.Filters;
+using companyApp.Server.Filters.Pagination;
 using companyApp.Server.Mapping;
 using companyApp.Server.Models.DTOs;
 using companyApp.Server.Models.Entities;
@@ -8,7 +10,7 @@ namespace companyApp.Server.Interfaces;
 
 public interface IAgentRepository
 {
-    Task<IEnumerable<ReadAgentDTO>> Get(IMapper _mapper,CancellationToken cancellationToken);
+    Task<Tuple<int, List<ReadAgentDTO>>> Get(InfoFilter infoFilter, PaginationFilter validFilter, IMapper _mapper,CancellationToken cancellationToken);
     Task<ReadAgentDTO?> Get(int agentId, IMapper _mapper, CancellationToken cancellationToken);
     Task<int> Create(CreateAgentDTO agentDTO, IMapper _mapper,CancellationToken cancellationToken);
     Task Update(UpdateAgentDTO agentDTO, IMapper mapper, CancellationToken cancellationToken);
@@ -17,18 +19,28 @@ public interface IAgentRepository
 
 public class AgentRepository(ApplicationContext context) : IAgentRepository
 {
-    public async Task<IEnumerable<ReadAgentDTO>> Get(IMapper _mapper,CancellationToken cancellationToken)
+    public async Task<Tuple<int, List<ReadAgentDTO>>> Get(InfoFilter infoFilter, PaginationFilter validFilter, IMapper _mapper,CancellationToken cancellationToken)
     {
         var agents = await context.Agents
             .Include(a => a.Company)
             .Include(agent => agent.Banks)
                 .ThenInclude(bank => bank.Company)
             .OrderBy(a => a.AgentId)
-            .Where(a => a.DeletedAt == null)
-            .Take(10)   // убрать потом
+            .Where(a => a.Company.Inn.ToString().Contains(infoFilter.Inn)   // filters 
+                     && a.Company.RepPhone.Contains(infoFilter.PhoneNumber)
+                     && a.Company.RepEmail.Contains(infoFilter.Email)
+                     && a.Company.OgrnDateOfIssue > infoFilter.OgrnFrom
+                     && a.Company.OgrnDateOfIssue < infoFilter.OgrnTo)
+            .Where(a => a.DeletedAt == null && (!infoFilter.Priority || a.Priority))
             .ToListAsync(cancellationToken);
-
-        return agents.Select(a => _mapper.Map<ReadAgentDTO>(a));
+        var totalRecords = agents.Count;
+        agents = agents
+            .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)  // pagination
+            .Take(validFilter.PageSize)
+            .ToList();
+        var response = agents.Select(a => _mapper.Map<ReadAgentDTO>(a)).ToList();
+        Tuple<int, List<ReadAgentDTO>> result = new(totalRecords, response);
+        return result;
     }
     public async Task<ReadAgentDTO?> Get(int Id, IMapper _mapper, CancellationToken cancellationToken)
     {

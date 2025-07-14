@@ -12,7 +12,7 @@ using companyApp.Server;
 namespace companyApp.Server.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250705180258_InitialCreate")]
+    [Migration("20250714190503_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -199,8 +199,8 @@ namespace companyApp.Server.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("ogrn");
 
-                    b.Property<DateTime>("OgrnDateOfIssue")
-                        .HasColumnType("timestamp with time zone")
+                    b.Property<DateOnly>("OgrnDateOfIssue")
+                        .HasColumnType("date")
                         .HasColumnName("ogrn_date_of_issue");
 
                     b.Property<string>("RepEmail")

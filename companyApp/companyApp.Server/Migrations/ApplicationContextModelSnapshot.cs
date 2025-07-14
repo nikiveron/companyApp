@@ -196,8 +196,8 @@ namespace companyApp.Server.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("ogrn");
 
-                    b.Property<DateTime>("OgrnDateOfIssue")
-                        .HasColumnType("timestamp with time zone")
+                    b.Property<DateOnly>("OgrnDateOfIssue")
+                        .HasColumnType("date")
                         .HasColumnName("ogrn_date_of_issue");
 
                     b.Property<string>("RepEmail")

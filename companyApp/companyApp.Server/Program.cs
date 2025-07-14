@@ -9,6 +9,14 @@ string connection = builder.Configuration.GetConnectionString("DefaultConnection
 
 builder.Services.AddDbContext<ApplicationContext>(options => options.UseNpgsql(connection));
 builder.Services.AddScoped<IAgentRepository, AgentRepository>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddSingleton<IUriService>(o =>
+{
+    var accessor = o.GetRequiredService<IHttpContextAccessor>();
+    var request = accessor.HttpContext.Request;
+    var uri = string.Concat(request.Scheme, "://", request.Host.ToUriComponent());
+    return new UriService(uri);
+});
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<AppMappingProfile>());
 // Add services to the container.
 

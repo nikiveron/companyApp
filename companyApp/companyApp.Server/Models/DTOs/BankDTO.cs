@@ -36,6 +36,6 @@ public class BankDTO
     public long Ogrn { get; set; }
 
     [Required(ErrorMessage = "Дата выдачи ОГРН обязательна")]
-    public DateTime OgrnDateOfIssue { get; set; }
+    public DateOnly OgrnDateOfIssue { get; set; }
     
 }

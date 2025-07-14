@@ -1,12 +1,11 @@
 <script setup>
   import { ref } from 'vue'
   const selectedTab = ref('agent')
-  import Filter from './FilterComp.vue'
 </script>
 
 <template>
   <div class="wrapper">
-    <Filter/>
+    <h3>В разработке!</h3>
   </div>
 </template>
 
@@ -14,32 +13,15 @@
   .wrapper {
     display: flex;
     place-items: flex-start;
+    background: var(--color-background-mute);
+    height: 50px;
+    align-items:center;
   }
 
-  /*
-  .logo {
-    display: block;
-    margin: 0 auto 2rem;
+  h3 {
+    color: #001798;
+    font-weight: 500;
+    margin: 0 0 0 2rem;
   }
-
-  @media (min-width: 1024px) {
-    header {
-      display: flex;
-      place-items: center;
-      padding-right: calc(var(--section-gap) / 2);
-    }
-
-    .logo {
-      margin: 0 2rem 0 0;
-    }
-
-    header .wrapper {
-      display: flex;
-      place-items: flex-start;
-      flex-wrap: wrap;
-    }
-  }
-  */
-
 
 </style>

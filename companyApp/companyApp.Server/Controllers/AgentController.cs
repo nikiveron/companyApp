@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using companyApp.Server.Filters;
+using companyApp.Server.Filters.Pagination;
 using companyApp.Server.Interfaces;
 using companyApp.Server.Models.DTOs;
 using companyApp.Server.Models.Entities;
@@ -7,15 +9,21 @@ using Microsoft.AspNetCore.Mvc;
 namespace companyApp.Server.Controllers;
 [ApiController]
 [Route("agents")]
-public class AgentController(IAgentRepository AgentRepository, ILogger<AgentController> logger) : ControllerBase
+public class AgentController(IAgentRepository AgentRepository, IUriService uriService, ILogger<AgentController> logger) : ControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<ReadAgentDTO>>> Get(IMapper _mapper, CancellationToken cancellationToken)
+    public async Task<ActionResult<List<ReadAgentDTO>>> Get([FromQuery] PaginationFilter paginationFilter, [FromQuery] InfoFilter infoFilter, IMapper _mapper, CancellationToken cancellationToken)
     {
         try
         {
-            var agents = await AgentRepository.Get(_mapper, cancellationToken);
-            return Ok(agents);
+            var route = Request.Path.Value;
+            var pageFilter = new PaginationFilter(paginationFilter.PageNumber, paginationFilter.PageSize);
+            var informFilter = new InfoFilter(infoFilter.Inn, infoFilter.PhoneNumber, infoFilter.Email, infoFilter.OgrnFrom, infoFilter.OgrnTo, infoFilter.Priority);
+            var getResult = await AgentRepository.Get(informFilter, pageFilter, _mapper, cancellationToken);
+            var pagedData = getResult.Item2;
+            var totalRecords = getResult.Item1;
+            var pagedResponse = PaginationHelper.CreatePagedReponse<ReadAgentDTO>(pagedData, pageFilter, totalRecords, uriService, route);
+            return Ok(pagedResponse);
         }
         catch (Exception ex)
         {

@@ -22,7 +22,7 @@ public class CreateAgentDTO()
     public long Ogrn { get; set; }
 
     [Required(ErrorMessage = "Дата выдачи ОГРН обязательна")]
-    public DateTime OgrnDateOfIssue { get; set; }
+    public DateOnly OgrnDateOfIssue { get; set; }
 
     [Required(ErrorMessage = "Фамилия представителя обязательна")]
     public string RepLastName { get; set; } = string.Empty;

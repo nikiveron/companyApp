@@ -33,7 +33,7 @@ public class CompanyEntity
 
     [Required]
     [Column("ogrn_date_of_issue")]
-    public DateTime OgrnDateOfIssue { get; set; }
+    public DateOnly OgrnDateOfIssue { get; set; }
 
     [Required]
     [Column("rep_last_name")]

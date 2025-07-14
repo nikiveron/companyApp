@@ -41,7 +41,7 @@ public class ReadAgentDTO
     public long Ogrn { get; set; }
     
     [Required(ErrorMessage = "Дата выдачи ОГРН обязательна")]
-    public DateTime OgrnDateOfIssue { get; set; }
+    public DateOnly OgrnDateOfIssue { get; set; }
     
     public List<BankDTO> Banks { get; set; } = [];
     public bool Priority { get; set; }
