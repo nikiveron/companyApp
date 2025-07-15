@@ -51,14 +51,14 @@
     try {
       console.log('Фильтры в таблице:', filters);
       const params = new URLSearchParams();
-      params.append('pageNumber', page);
-      params.append('pageSize', pageSize);
-      if (filters.inn) params.append('inn', filters.inn);
-      if (filters.phone) params.append('phone', filters.phone);
-      if (filters.email) params.append('email', filters.email);
-      if (filters.ogrnDateFrom) params.append('ogrnFrom', filters.ogrnDateFrom);
-      if (filters.ogrnDateTo) params.append('ogrnTo', filters.ogrnDateTo);
-      if (filters.priority !== undefined) params.append('priority', filters.priority);
+      params.append('PageNumber', page);
+      params.append('PageSize', pageSize);
+      if (filters.inn) params.append('Inn', filters.inn);
+      if (filters.phone) params.append('PhoneNumber', filters.phone);
+      if (filters.email) params.append('Email', filters.email);
+      if (filters.ogrnDateFrom) params.append('OgrnFrom', filters.ogrnDateFrom);
+      if (filters.ogrnDateTo) params.append('OgrnTo', filters.ogrnDateTo);
+      if (filters.priority !== undefined) params.append('Priority', filters.priority);
 
       const url = `${API_URL}?${params.toString()}`;
       console.log('params:', params.toString());

@@ -9,8 +9,6 @@ public class ApplicationContext : DbContext
     public DbSet<BankEntity> Banks => Set<BankEntity>();
     public DbSet<ClientEntity> Clients => Set<ClientEntity>();
 
-    public DbSet<AgentViewEntity> AgentsView { get; set; } = null!;
-
     public ApplicationContext(DbContextOptions<ApplicationContext> options)
         : base(options)
     {
@@ -50,12 +48,6 @@ public class ApplicationContext : DbContext
             .HasOne(c => c.Client)
             .WithOne(cl => cl.Company)
             .HasForeignKey<ClientEntity>(cl => cl.ClientId);
-
-        modelBuilder.Entity<AgentViewEntity>(ave =>
-        {
-            ave.HasNoKey();
-            ave.ToView("agent_view");
-        });
     }
 }
 

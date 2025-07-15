@@ -21,15 +21,18 @@ public class CompanyEntity
 
     [Required]
     [Column("inn")]
-    public long Inn { get; set; }
+    [StringLength(12)]
+    public string Inn { get; set; } = string.Empty;
 
     [Required]
     [Column("kpp")]
-    public int Kpp { get; set; }
+    [StringLength(9)]
+    public string Kpp { get; set; } = string.Empty;
 
     [Required]
     [Column("ogrn")]
-    public long Ogrn { get; set; }
+    [StringLength(13)]
+    public string Ogrn { get; set; } = string.Empty;
 
     [Required]
     [Column("ogrn_date_of_issue")]

@@ -1,4 +1,6 @@
 ﻿using companyApp.Server.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System.Threading;
 
 namespace companyApp.Server.Filters.Pagination;
 
@@ -22,5 +24,13 @@ public class PaginationHelper
         response.TotalPages = roundedTotalPages;
         response.TotalRecords = totalRecords;
         return response;
+    }
+    public async static Task<List<T>> ApplyPagination<T>(IQueryable<T> queryBase, PaginationFilter validFilter, CancellationToken cancellationToken)
+    {
+        var pageList = await queryBase
+            .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)  
+            .Take(validFilter.PageSize)
+            .ToListAsync(cancellationToken);
+        return pageList;
     }
 }

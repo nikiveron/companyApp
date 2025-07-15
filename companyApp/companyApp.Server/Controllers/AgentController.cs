@@ -3,7 +3,6 @@ using companyApp.Server.Filters;
 using companyApp.Server.Filters.Pagination;
 using companyApp.Server.Interfaces;
 using companyApp.Server.Models.DTOs;
-using companyApp.Server.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace companyApp.Server.Controllers;
@@ -11,6 +10,27 @@ namespace companyApp.Server.Controllers;
 [Route("agents")]
 public class AgentController(IAgentRepository AgentRepository, IUriService uriService, ILogger<AgentController> logger) : ControllerBase
 {
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] CreateAgentDTO agent, IMapper _mapper, CancellationToken cancellationToken)
+    {
+        try
+        {
+            if (agent == null)
+            {
+                return BadRequest();
+            }
+            return Ok(await AgentRepository.Create(agent, cancellationToken));
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Внутренняя ошибка сервера: {ex.Message}");
+        }
+    }
+
     [HttpGet]
     public async Task<ActionResult<List<ReadAgentDTO>>> Get([FromQuery] PaginationFilter paginationFilter, [FromQuery] InfoFilter infoFilter, IMapper _mapper, CancellationToken cancellationToken)
     {
@@ -19,7 +39,7 @@ public class AgentController(IAgentRepository AgentRepository, IUriService uriSe
             var route = Request.Path.Value;
             var pageFilter = new PaginationFilter(paginationFilter.PageNumber, paginationFilter.PageSize);
             var informFilter = new InfoFilter(infoFilter.Inn, infoFilter.PhoneNumber, infoFilter.Email, infoFilter.OgrnFrom, infoFilter.OgrnTo, infoFilter.Priority);
-            var getResult = await AgentRepository.Get(informFilter, pageFilter, _mapper, cancellationToken);
+            var getResult = await AgentRepository.Get(informFilter, pageFilter, cancellationToken);
             var pagedData = getResult.Item2;
             var totalRecords = getResult.Item1;
             var pagedResponse = PaginationHelper.CreatePagedReponse<ReadAgentDTO>(pagedData, pageFilter, totalRecords, uriService, route);
@@ -36,7 +56,7 @@ public class AgentController(IAgentRepository AgentRepository, IUriService uriSe
     {
         try
         {
-            var agent = await AgentRepository.Get(id, _mapper, cancellationToken);
+            var agent = await AgentRepository.Get(id, cancellationToken);
 
             if (agent == null)
             {
@@ -51,20 +71,24 @@ public class AgentController(IAgentRepository AgentRepository, IUriService uriSe
         }
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreateAgentDTO agent, IMapper _mapper, CancellationToken cancellationToken)
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateAgentDTO agent, IMapper _mapper, CancellationToken cancellationToken)
     {
         try
         {
-            if (agent == null)
+            if (agent == null || agent.Id != id)
             {
                 return BadRequest();
             }
-            return Ok(await AgentRepository.Create(agent, _mapper, cancellationToken));
-        }
-        catch (ArgumentException ex)
-        {
-            return BadRequest(ex.Message);
+
+            var existingAgent = await AgentRepository.Get(id, cancellationToken);
+            if (existingAgent == null)
+            {
+                return NotFound();
+            }
+
+            await AgentRepository.Update(agent, cancellationToken);
+            return Ok();
         }
         catch (Exception ex)
         {
@@ -91,31 +115,5 @@ public class AgentController(IAgentRepository AgentRepository, IUriService uriSe
             return StatusCode(500, $"Внутренняя ошибка сервера: {ex.Message}");
         }
     }
-
-    [HttpPut("{id}")]
-    public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateAgentDTO agent, IMapper _mapper, CancellationToken cancellationToken)
-    {
-        try
-        {
-            if (agent == null || agent.Id != id)
-            {
-                return BadRequest();
-            }
-
-            var existingAgent = await AgentRepository.Get(id, _mapper, cancellationToken);
-            if (existingAgent == null)
-            {
-                return NotFound();
-            }
-
-            await AgentRepository.Update(agent, _mapper, cancellationToken);
-            return Ok();
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"Внутренняя ошибка сервера: {ex.Message}");
-        }
-    }
-
 }
 

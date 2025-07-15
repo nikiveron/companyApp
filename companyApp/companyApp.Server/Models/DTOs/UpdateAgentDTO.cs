@@ -15,13 +15,13 @@ public class UpdateAgentDTO
     public string FullName { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "ИНН обязателен")]
-    public long Inn { get; set; }
+    public string Inn { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "КПП обязателен")]
-    public int Kpp { get; set; }
+    public string Kpp { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "ОГРН обязателен")]
-    public long Ogrn { get; set; }
+    public string Ogrn { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Дата выдачи ОГРН обязательна")]
     public DateOnly OgrnDateOfIssue { get; set; }
