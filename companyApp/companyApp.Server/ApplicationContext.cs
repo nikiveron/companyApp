@@ -48,6 +48,10 @@ public class ApplicationContext : DbContext
             .HasOne(c => c.Client)
             .WithOne(cl => cl.Company)
             .HasForeignKey<ClientEntity>(cl => cl.ClientId);
+
+        modelBuilder.Entity<CompanyEntity>().HasIndex(c => c.Inn).IsUnique();
+        modelBuilder.Entity<CompanyEntity>().HasIndex(c => c.Kpp).IsUnique();
+        modelBuilder.Entity<CompanyEntity>().HasIndex(c => c.Ogrn).IsUnique();
     }
 }
 
