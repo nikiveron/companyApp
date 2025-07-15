@@ -95,7 +95,6 @@ public class AgentRepository(ApplicationContext context, IMapper _mapper) : IAge
             await context.SaveChangesAsync(cancellationToken);
             return true;
         }
-
         return false;
     }
 }

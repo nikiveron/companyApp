@@ -14,6 +14,16 @@
   const ogrnDateToValue = ref('')
   const priorityValue = ref(false)
 
+  const agents = ref([]);
+  const pageNumber = ref(1);
+  const pageSize = ref(10);
+  const firstPage = ref('');
+  const lastPage = ref('');
+  const totalPages = ref(1);
+  const totalRecords = ref(1);
+  const nextPage = ref('');
+  const previousPage = ref('');
+
   const emit = defineEmits(['apply-filters'])
 
   function applyFilters() {
@@ -32,27 +42,18 @@
       ogrnDateFrom: ogrnDateFromValue.value,
       ogrnDateTo: ogrnDateToValue.value,
       priority: priorityValue.value
-    }, 1)
+    }, 1, pageSize.value)
   }
 
-  const agents = ref([]);
-  const pageNumber = ref(1);
-  const pageSize = 10;
-  const firstPage = ref('');
-  const lastPage = ref('');
-  const totalPages = ref(1);
-  const totalRecords = ref(1);
-  const nextPage = ref('');
-  const previousPage = ref('');
 
   const API_URL = 'https://localhost:7166/agents'
 
-  async function loadAgentsWithFilters(filters, page = 1) {
+  async function loadAgentsWithFilters(filters, page = 1, pgSize = 10) {
     try {
       console.log('Фильтры в таблице:', filters);
       const params = new URLSearchParams();
       params.append('PageNumber', page);
-      params.append('PageSize', pageSize);
+      params.append('PageSize', pgSize);
       if (filters.inn) params.append('Inn', filters.inn);
       if (filters.phone) params.append('PhoneNumber', filters.phone);
       if (filters.email) params.append('Email', filters.email);
@@ -78,13 +79,18 @@
 
   // Загружаем при первом монтировании
   onMounted(() => {
-    loadAgentsWithFilters(props.filters || {}, 1)
+    loadAgentsWithFilters(props.filters || {}, 1, 10)
   })
 
   // Следим за изменением фильтров
   watch(() => props.filters, (newFilters) => {
-    loadAgentsWithFilters(newFilters || {}, 1)
+    loadAgentsWithFilters(newFilters || {}, 1, pageSize.value)
   }, { deep: true })
+
+  watch(pageSize, (newVal) => {
+    // При изменении pageSize загружаем первую страницу с новым размером
+    loadAgentsWithFilters(currentFilters(), 1, newVal);
+  });
 
   function currentFilters() {
     return {
@@ -97,6 +103,7 @@
     }
   }
 
+  
 </script>
 
 <template>
@@ -182,29 +189,97 @@
         </tbody>
       </table>
     </div>
-    <div class="pagination-wrapper">
-      <button class="pagination-button-wrap"
-              @click.prevent="loadAgentsWithFilters(currentFilters(), 1)"
-              :class="{ disabled: pageNumber === 1 }">
-        <<
-      </button>
-      <button class="pagination-button-wrap"
-              @click.prevent="loadAgentsWithFilters(currentFilters(), pageNumber - 1)"
-              :class="{ disabled: pageNumber === 1 }">
-        <
-      </button>
-      <label class="page-number-label">{{ pageNumber }}</label>
-      <button class="pagination-button-wrap"
-              @click.prevent="loadAgentsWithFilters(currentFilters(), pageNumber + 1)"
-              :class="{ disabled: pageNumber === totalPages }">
-        >
-      </button>
-      <button class="pagination-button-wrap"
-              @click.prevent="loadAgentsWithFilters(currentFilters(), totalPages)"
-              :class="{ disabled: pageNumber === totalPages }">
-        >>
-      </button>
-    </div>
+    <nav class="pagination-wrapper">
+      <select class="select-style" id="pagination-select" v-model.number="pageSize">
+        <option label="5" :value="5">5</option>
+        <option label="10" :value="10" selected>10</option>
+        <option label="25" :value="25">25</option>
+        <option label="50" :value="50">50</option>
+      </select>
+      <div class="pagination-buttons-wrapper">
+        <button class="pagination-button-wrap"
+                @click.prevent="loadAgentsWithFilters(currentFilters(), 1, pageSize)"
+                :class="{ disabled: pageNumber === 1 }">
+          <<
+        </button>
+        <button class="pagination-button-wrap"
+                @click.prevent="loadAgentsWithFilters(currentFilters(), pageNumber - 1, pageSize)"
+                :class="{ disabled: pageNumber === 1 }">
+          <
+        </button>
+        <button class="pagination-button-wrap"
+                @click.prevent="loadAgentsWithFilters(currentFilters(), 1, pageSize)"
+                :class="{ disabled: pageNumber === 1 }">
+          {{ 1 }}
+        </button>
+        <button v-if="totalPages > 1"
+                class="pagination-button-wrap"
+                @click.prevent="loadAgentsWithFilters(currentFilters(), 2, pageSize)"
+                :class="{ disabled: pageNumber === 2 }">
+          {{ 2 }}
+        </button>
+        <button v-if="pageNumber > 5"
+                class="pagination-button-wrap"
+                @click.prevent="loadAgentsWithFilters(currentFilters(), Math.floor(pageNumber/2), pageSize)">
+          ...
+        </button>
+        <button v-if="pageNumber > 4"
+                class="pagination-button-wrap"
+                @click.prevent="loadAgentsWithFilters(currentFilters(), pageNumber - 2, pageSize)">
+          {{ pageNumber - 2}}
+        </button>
+        <button v-if="pageNumber > 3"
+                class="pagination-button-wrap"
+                @click.prevent="loadAgentsWithFilters(currentFilters(), pageNumber - 1, pageSize)">
+          {{ pageNumber - 1}}
+        </button>
+        <button v-if="pageNumber > 2 && pageNumber < totalPages - 1"
+                class="pagination-button-wrap"
+                @click.prevent="loadAgentsWithFilters(currentFilters(), pageNumber, pageSize)"
+                :class="{ disabled: pageNumber === pageNumber }">
+          {{ pageNumber }}
+        </button>
+        <button v-if="pageNumber < totalPages - 2 && pageNumber > 1"
+                class="pagination-button-wrap"
+                @click.prevent="loadAgentsWithFilters(currentFilters(), pageNumber + 1, pageSize)"
+                :class="{ disabled: pageNumber === totalPages }">
+          {{ pageNumber + 1}}
+        </button>
+        <button v-if="pageNumber < totalPages - 3"
+                class="pagination-button-wrap"
+                @click.prevent="loadAgentsWithFilters(currentFilters(), pageNumber + 2, pageSize)"
+                :class="{ disabled: pageNumber === totalPages }">
+          {{ pageNumber + 2}}
+        </button>
+        <button v-if="pageNumber < totalPages - 4"
+                class="pagination-button-wrap"
+                @click.prevent="loadAgentsWithFilters(currentFilters(), pageNumber + Math.floor((totalPages - pageNumber) / 2), pageSize)">
+          ...
+        </button>
+        <button v-if="totalPages > 2"
+                class="pagination-button-wrap"
+                @click.prevent="loadAgentsWithFilters(currentFilters(), totalPages - 1, pageSize)"
+                :class="{ disabled: pageNumber === totalPages - 1}">
+          {{ totalPages - 1 }}
+        </button>
+        <button v-if="totalPages > 2"
+                class="pagination-button-wrap"
+                @click.prevent="loadAgentsWithFilters(currentFilters(), totalPages, pageSize)"
+                :class="{ disabled: pageNumber === totalPages }">
+          {{ totalPages }}
+        </button>
+        <button class="pagination-button-wrap"
+                @click.prevent="loadAgentsWithFilters(currentFilters(), pageNumber + 1, pageSize)"
+                :class="{ disabled: pageNumber === totalPages }">
+          >
+        </button>
+        <button class="pagination-button-wrap"
+                @click.prevent="loadAgentsWithFilters(currentFilters(), totalPages, pageSize)"
+                :class="{ disabled: pageNumber === totalPages }">
+          >>
+        </button>
+      </div>
+    </nav>
   </div>
 </template>
 
@@ -332,14 +407,17 @@
       border-color: var(--color-button-hover);
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
+
   .data-wrapper {
     display: flex;
     flex-direction: column;
     width: 100%;
   }
+
   .buttons-wrapper{
     display: flex;
   }
+
   .button-wrap {
     margin: 1rem 0.5rem 1rem 0;
     padding: 8px 12px;
@@ -352,13 +430,11 @@
     cursor: pointer;
     transition: background-color 0.2s;
   }
-
     .button-wrap:hover {
       background: var(--color-button-hover);
       border-color: var(--color-button-hover);
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
-  
   .button-wrap:last-child {
     margin-right: 0;
   }
@@ -371,6 +447,7 @@
     padding: 0.5rem 0.5rem;
     width: 100%;
   }
+
   .table-style {
     table-layout: fixed;
     width: 100%;
@@ -381,21 +458,30 @@
       background: var(--color-background-soft);
       border: 1px solid var(--color-background-mute);
     }
-
     .table-style td {
       border: 1px solid var(--color-background-soft);
     }
 
 .pagination-wrapper{
-  margin: 0.5rem 0 0.5rem 0;
+    display: flex;
+    justify-content: flex-start;
+    margin: 0.5rem 0 0.5rem 0;
 }
+
+  .select-style {
+    border: 2px solid var(--color-border-hover);
+    border-radius: 8px;
+    width: 6rem;
+    font: 500 14px arial;
+  }
 
   .pagination-button-wrap {
     margin: 0 0.25rem 0 0.25rem;
     padding: 8px 15px;
     border: 1px solid var(--color-button);
     border-radius: 10px;
-    width: 50px;
+    min-width: 50px;
+    width: max-content;
     color: white;
     background: var(--color-button);
     text-decoration: none;

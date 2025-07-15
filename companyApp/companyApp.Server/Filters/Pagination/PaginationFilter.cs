@@ -12,6 +12,6 @@ public class PaginationFilter
     public PaginationFilter(int pageNumber, int pageSize)
     {
         PageNumber = pageNumber < 1 ? 1 : pageNumber;
-        PageSize = pageSize > 10 ? 10 : pageSize;
+        PageSize = pageSize;
     }
 }
