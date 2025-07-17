@@ -1,17 +1,22 @@
 ﻿using AutoMapper;
 using companyApp.Server.Filters;
 using companyApp.Server.Filters.Pagination;
-using companyApp.Server.Interfaces;
 using companyApp.Server.Models.DTOs;
+using companyApp.Server.Services.Interfaces;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Routing;
+using static companyApp.Server.Services.Features.GetAllAgents;
 
 namespace companyApp.Server.Controllers;
 [ApiController]
 [Route("agents")]
-public class AgentController(IAgentRepository AgentRepository, IUriService uriService, ILogger<AgentController> logger) : ControllerBase
+public class AgentController(IAgentRepository AgentRepository, IMediator _mediator, IUriService uriService, ILogger<AgentController> logger) : ControllerBase
 {
+
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreateAgentDTO agent, IMapper _mapper, CancellationToken cancellationToken)
+    public async Task<IActionResult> Create([FromBody] CreateAgentDTO agent, CancellationToken cancellationToken)
     {
         try
         {
@@ -32,17 +37,12 @@ public class AgentController(IAgentRepository AgentRepository, IUriService uriSe
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<ReadAgentDTO>>> Get([FromQuery] PaginationFilter paginationFilter, [FromQuery] InfoFilter infoFilter, IMapper _mapper, CancellationToken cancellationToken)
+    public async Task<ActionResult<List<ReadAgentDTO>>> Get([FromQuery] PaginationFilter paginationFilter, [FromQuery] InfoFilter infoFilter, CancellationToken cancellationToken)
     {
         try
         {
-            var route = Request.Path.Value;
-            var pageFilter = new PaginationFilter(paginationFilter.PageNumber, paginationFilter.PageSize);
-            var informFilter = new InfoFilter(infoFilter.Inn, infoFilter.PhoneNumber, infoFilter.Email, infoFilter.OgrnFrom, infoFilter.OgrnTo, infoFilter.Priority);
-            var getResult = await AgentRepository.Get(informFilter, pageFilter, cancellationToken);
-            var pagedData = getResult.Item2;
-            var totalRecords = getResult.Item1;
-            var pagedResponse = PaginationHelper.CreatePagedReponse<ReadAgentDTO>(pagedData, pageFilter, totalRecords, uriService, route);
+            GetAgentQuery query = new(Request.Path.Value, infoFilter, paginationFilter);
+            var pagedResponse = await _mediator.Send(query, cancellationToken);
             return Ok(pagedResponse);
         }
         catch (Exception ex)
@@ -52,7 +52,7 @@ public class AgentController(IAgentRepository AgentRepository, IUriService uriSe
     }
 
     [HttpGet("{id}", Name = "GetAgent")]
-    public async Task<IActionResult> Get([FromRoute] int id, IMapper _mapper, CancellationToken cancellationToken)
+    public async Task<IActionResult> Get([FromRoute] int id, CancellationToken cancellationToken)
     {
         try
         {
@@ -72,7 +72,7 @@ public class AgentController(IAgentRepository AgentRepository, IUriService uriSe
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateAgentDTO agent, IMapper _mapper, CancellationToken cancellationToken)
+    public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateAgentDTO agent, CancellationToken cancellationToken)
     {
         try
         {

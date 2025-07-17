@@ -1,7 +1,7 @@
 ﻿using companyApp.Server.Filters.Pagination;
 using Microsoft.AspNetCore.WebUtilities;
 
-namespace companyApp.Server.Interfaces;
+namespace companyApp.Server.Services.Interfaces;
 
 public interface IUriService
 {

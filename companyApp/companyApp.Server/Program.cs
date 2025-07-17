@@ -1,6 +1,6 @@
 using companyApp.Server;
-using companyApp.Server.Interfaces;
 using companyApp.Server.Mapping;
+using companyApp.Server.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,7 +18,9 @@ builder.Services.AddSingleton<IUriService>(o =>
     return new UriService(uri);
 });
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<AppMappingProfile>());
-// Add services to the container.
+builder.Services.AddMediatR(cfg => {
+    cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

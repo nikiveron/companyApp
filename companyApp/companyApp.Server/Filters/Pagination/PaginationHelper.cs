@@ -1,4 +1,4 @@
-﻿using companyApp.Server.Interfaces;
+﻿using companyApp.Server.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 

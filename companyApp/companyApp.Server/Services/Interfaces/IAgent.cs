@@ -5,7 +5,7 @@ using companyApp.Server.Models.DTOs;
 using companyApp.Server.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace companyApp.Server.Interfaces;
+namespace companyApp.Server.Services.Interfaces;
 
 public interface IAgentRepository
 {
