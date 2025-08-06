@@ -58,7 +58,7 @@ public class AgentRepository(ApplicationContext context, IMapper _mapper) : IAge
         agentEntity.Banks = agent.Banks?.Select(bank => context.Banks.FirstOrDefault(b => b.BankId == bank))
                 .Where(bank => bank != null)
                 .ToList() ?? [];
-        agentEntity.Company = await context.Companies.FirstOrDefaultAsync(c => c.Inn == agent.Inn, cancellationToken) ?? _mapper.Map<CompanyEntity>(agentEntity);
+        agentEntity.Company = await context.Companies.FirstOrDefaultAsync(c => c.Inn == agent.Inn, cancellationToken) ?? _mapper.Map<CompanyEntity>(agent);
         context.Agents.Add(agentEntity);
         await context.SaveChangesAsync(cancellationToken);
         return await context.Agents

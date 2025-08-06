@@ -70,7 +70,21 @@ public class AppMappingProfile : Profile
             .ForMember(dest => dest.RepFirstName, opt => opt.MapFrom(src => src.RepFirstName))
             .ForMember(dest => dest.RepPatronymic, opt => opt.MapFrom(src => src.RepPatronymic))
             .ForMember(dest => dest.RepEmail, opt => opt.MapFrom(src => src.RepEmail))
-            .ForMember(dest => dest.RepPhone, opt => opt.MapFrom(src => src.RepPhone)); 
+            .ForMember(dest => dest.RepPhone, opt => opt.MapFrom(src => src.RepPhone));
+
+        CreateMap<AgentEntity, CompanyEntity>()
+            .ForMember(dest => dest.ShortName, opt => opt.MapFrom(src => src.Company.ShortName))
+            .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.Company.FullName))
+            .ForMember(dest => dest.Inn, opt => opt.MapFrom(src => src.Company.Inn))
+            .ForMember(dest => dest.Kpp, opt => opt.MapFrom(src => src.Company.Kpp))
+            .ForMember(dest => dest.Ogrn, opt => opt.MapFrom(src => src.Company.Ogrn))
+            .ForMember(dest => dest.OgrnDateOfIssue, opt => opt.MapFrom(src => src.Company.OgrnDateOfIssue))
+            .ForMember(dest => dest.RepLastName, opt => opt.MapFrom(src => src.Company.RepLastName))
+            .ForMember(dest => dest.RepFirstName, opt => opt.MapFrom(src => src.Company.RepFirstName))
+            .ForMember(dest => dest.RepPatronymic, opt => opt.MapFrom(src => src.Company.RepPatronymic))
+            .ForMember(dest => dest.RepEmail, opt => opt.MapFrom(src => src.Company.RepEmail))
+            .ForMember(dest => dest.RepPhone, opt => opt.MapFrom(src => src.Company.RepPhone))
+            .ForMember(dest => dest.DeletedAt, opt => opt.Ignore());
 
     }
 }

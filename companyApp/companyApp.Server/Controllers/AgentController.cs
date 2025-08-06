@@ -1,20 +1,15 @@
-﻿using AutoMapper;
-using companyApp.Server.Filters;
+﻿using companyApp.Server.Filters;
 using companyApp.Server.Filters.Pagination;
 using companyApp.Server.Models.DTOs;
-using companyApp.Server.Services.Interfaces;
+using companyApp.Server.Services.Features;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Routing;
-using static companyApp.Server.Services.Features.GetAllAgents;
 
 namespace companyApp.Server.Controllers;
 [ApiController]
 [Route("agents")]
-public class AgentController(IAgentRepository AgentRepository, IMediator _mediator, IUriService uriService, ILogger<AgentController> logger) : ControllerBase
+public class AgentController(IMediator _mediator) : ControllerBase
 {
-
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateAgentDTO agent, CancellationToken cancellationToken)
     {
@@ -24,7 +19,7 @@ public class AgentController(IAgentRepository AgentRepository, IMediator _mediat
             {
                 return BadRequest();
             }
-            return Ok(await AgentRepository.Create(agent, cancellationToken));
+            return Ok(await _mediator.Send(new CreateAgent.Query(agent), cancellationToken));
         }
         catch (ArgumentException ex)
         {
@@ -41,7 +36,7 @@ public class AgentController(IAgentRepository AgentRepository, IMediator _mediat
     {
         try
         {
-            GetAgentQuery query = new(Request.Path.Value, infoFilter, paginationFilter);
+            GetAllAgents.Query query = new(Request.Path.Value, infoFilter, paginationFilter);
             var pagedResponse = await _mediator.Send(query, cancellationToken);
             return Ok(pagedResponse);
         }
@@ -56,7 +51,7 @@ public class AgentController(IAgentRepository AgentRepository, IMediator _mediat
     {
         try
         {
-            var agent = await AgentRepository.Get(id, cancellationToken);
+            var agent = await _mediator.Send(new GetAgent.Query(id), cancellationToken);
 
             if (agent == null)
             {
@@ -81,13 +76,13 @@ public class AgentController(IAgentRepository AgentRepository, IMediator _mediat
                 return BadRequest();
             }
 
-            var existingAgent = await AgentRepository.Get(id, cancellationToken);
+            var existingAgent = await _mediator.Send(new GetAgent.Query(id), cancellationToken);
             if (existingAgent == null)
             {
                 return NotFound();
             }
 
-            await AgentRepository.Update(agent, cancellationToken);
+            await _mediator.Send(new UpdateAgent.Query(agent), cancellationToken);
             return Ok();
         }
         catch (Exception ex)
@@ -101,7 +96,7 @@ public class AgentController(IAgentRepository AgentRepository, IMediator _mediat
     {
         try
         {
-            bool deletedStatus = await AgentRepository.Delete(id, cancellationToken);
+            bool deletedStatus = await _mediator.Send(new DeleteAgent.Query(id), cancellationToken);
 
             if (!deletedStatus)
             {
